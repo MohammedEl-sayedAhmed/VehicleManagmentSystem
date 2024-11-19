@@ -1,0 +1,7 @@
+Receipt for Transaction ID: T5
+Customer: Latifa
+Vehicle: v7
+Rental Duration: 7 days
+Extra Fees: 0.0 AED
+Renter's Insurance: Included
+Total Amount: 99.0 AED

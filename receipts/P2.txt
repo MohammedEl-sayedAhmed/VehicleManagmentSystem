@@ -1,0 +1,7 @@
+Receipt for Transaction ID: T4
+Customer: Mohammed
+Vehicle: v2
+Rental Duration: 5 days
+Extra Fees: 0.0 AED
+Renter's Insurance: Not Included
+Total Amount: 10.0 AED

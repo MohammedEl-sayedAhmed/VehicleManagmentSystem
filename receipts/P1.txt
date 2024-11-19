@@ -1,0 +1,7 @@
+Receipt for Transaction ID: T3
+Customer: Mohammed
+Vehicle: v6
+Rental Duration: 2 days
+Extra Fees: 0.0 AED
+Renter's Insurance: Included
+Total Amount: 62.0 AED
