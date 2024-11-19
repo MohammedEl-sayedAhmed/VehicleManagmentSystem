@@ -33,9 +33,6 @@ The key functionalities of the Vehicle Rental Management System include:
     \item \textbf{Customer Management:} 
     This feature handles customer registration, allowing users to store customer details, track their rental history, and maintain their preferences for future rentals.
     
-    \item \textbf{Reservation System:} 
-    Users can reserve vehicles in advance, and the system helps avoid double bookings by managing availability effectively.
-    
     \item \textbf{Rental Transactions:} 
     This functionality records all aspects of the rental process, including the duration of the rental, extra fees (e.g., for damages), and whether a customer has purchased renter's insurance.
     
@@ -49,7 +46,6 @@ The proposed UML diagram will include the following classes and their relationsh
 \begin{itemize}
     \item \textbf{Customer:} Represents the customers of the rental service, containing attributes such as name, contact information, and rental history.
     \item \textbf{Vehicle:} Represents the vehicles available for rent, including attributes like vehicle ID, model, availability status, and rental price.
-    \item \textbf{Reservation:} Manages the reservation details, linking customers to the vehicles they wish to rent, including reservation dates and status.
     \item \textbf{RentalTransaction:} Records the details of each rental transaction, including the customer, vehicle, rental duration, and any additional fees.
     \item \textbf{Payment:} Handles payment information, including payment methods and transaction status.
 \end{itemize}
@@ -64,11 +60,11 @@ In this phase, we identify the main classes, objects, methods, and constructors 
 \begin{itemize}
     \item \textbf{Customer}
         \begin{itemize}
-            \item Attributes: name, age, purchasedRentersInsurance, vehicle, duration, damageFees, paymentMethod, phoneNumber
+            \item Attributes: name, age, rentedVehicle, rentalDuration, damageFees, paymentMethod, phoneNumber
             \item Methods: 
             \begin{itemize}
                 \item +Customer()
-                \item +Customer(name, age, insurance, vehicle, duration, phoneNumber)
+                \item +Customer(name, age, vehicle, duration, phoneNumber)
                 \item +setName(String name): void
                 \item +getName(): String
                 \item +setAge(int age): void
@@ -77,8 +73,6 @@ In this phase, we identify the main classes, objects, methods, and constructors 
                 \item +getVehicle(): String
                 \item +setDuration(int duration): void
                 \item +getDuration(): int
-                \item +setReservation(boolean reservation): void
-                \item +getReservation(): boolean
                 \item +setDamageFees(double n): void
                 \item +getDamageFees(): double
                 \item +setPaymentMethod(String payment): void
@@ -97,18 +91,6 @@ In this phase, we identify the main classes, objects, methods, and constructors 
                 \item +checkAvailability(): boolean
                 \item +updateStatus(): void
                 \item +getRentalPrice(): double
-            \end{itemize}
-        \end{itemize}
-    
-    \item \textbf{Reservation}
-        \begin{itemize}
-            \item Attributes: reservationID, customer, vehicle, reservationDate, status
-            \item Methods: 
-            \begin{itemize}
-                \item +Reservation()
-                \item +createReservation(): void
-                \item +cancelReservation(): void
-                \item +updateReservation(): void
             \end{itemize}
         \end{itemize}
     
@@ -148,15 +130,14 @@ Below is the updated UML diagram with directional arrows representing the relati
     \begin{umlclass}[x=0,y=2.5]{Customer}{
         - name: string \\ 
         - age: int \\ 
-        - purchasedRentersInsurance: boolean \\ 
-        - vehicle: string \\ 
-        - duration: int \\ 
+        - rentedVehicle: string \\ 
+        - rentalDuration: int \\ 
         - damageFees: double \\ 
         - paymentMethod: string \\ 
         - phoneNumber: string
     }{
         + Customer() \\ 
-        + Customer(name, age, insurance, vehicle, duration, phoneNumber) \\ 
+        + Customer(name, age, vehicle, duration, phoneNumber) \\ 
         + setName(name: string): void \\ 
         + getName(): string \\ 
         + setAge(age: int): void \\ 
@@ -165,8 +146,6 @@ Below is the updated UML diagram with directional arrows representing the relati
         + getVehicle(): string \\ 
         + setDuration(duration: int): void \\ 
         + getDuration(): int \\ 
-        + setReservation(reservation: boolean): void \\ 
-        + getReservation(): boolean \\ 
         + setDamageFees(fees: double): void \\ 
         + getDamageFees(): double \\ 
         + setPaymentMethod(payment: string): void \\ 
@@ -187,21 +166,6 @@ Below is the updated UML diagram with directional arrows representing the relati
         + checkAvailability(): boolean \\ 
         + updateStatus(): void \\ 
         + getRentalPrice(): double
-    }
-    \end{umlclass}
-
-    % Reservation Class
-    \begin{umlclass}[x=10,y=8]{Reservation}{
-        - reservationID: string \\ 
-        - customer: Customer \\ 
-        - vehicle: Vehicle \\ 
-        - reservationDate: string \\ 
-        - status: string
-    }{
-        + Reservation() \\ 
-        + createReservation(): void \\ 
-        + cancelReservation(): void \\ 
-        + updateReservation(): void
     }
     \end{umlclass}
 
@@ -235,37 +199,15 @@ Below is the updated UML diagram with directional arrows representing the relati
     \end{umlclass}
 
     % Relationships with arrows
-    \umluniassoc[arg1=customer, pos1=0.9, anchor1=west, ->]{Reservation}{Customer}
-    \umluniassoc[arg1=vehicle, pos1=0.2, anchor1=west, ->]{Reservation}{Vehicle}
     \umluniassoc[arg1=customer, pos1=0.2, anchor1=west, ->]{RentalTransaction}{Customer}
     \umluniassoc[arg1=vehicle, pos1=0.7, anchor1=west, ->]{RentalTransaction}{Vehicle}
     \umluniassoc[arg1=transaction, pos1=0.7, anchor1=west, ->]{Payment}{RentalTransaction}
-
-    %  % Arrows for associations
-    % \umlunicompo{Customer}{Reservation}
-    % \umlunicompo{Vehicle}{Reservation}
-    % \umlunicompo{Customer}{RentalTransaction}
-    % \umlunicompo{Vehicle}{RentalTransaction}
-    % \umlunicompo{RentalTransaction}{Payment}
-
-    % % Relationships
-    % \umlassoc{Customer}{Reservation}
-    % \umlassoc{Vehicle}{Reservation}
-    % \umlassoc{Customer}{RentalTransaction}
-    % \umlassoc{Vehicle}{RentalTransaction}
-    % \umlassoc{RentalTransaction}{Payment}
-
-    
 
 \end{tikzpicture}
 \end{center}
 
 \subsection{Relationship Descriptions}
     \begin{enumerate}
-        \item \textbf{Customer - Reservation:} The `Reservation` class depends on the `Customer` class to access details about the customer making the reservation. This dependency is represented by an arrow from `Reservation` to `Customer`.
-    
-        \item \textbf{Vehicle - Reservation: } The `Reservation` class accesses details about the `Vehicle` being reserved. The arrow from `Reservation` to `Vehicle` indicates that `Reservation` holds information about the specific vehicle involved.
-    
         \item \textbf{Customer - RentalTransaction: } `RentalTransaction` requires customer details to log transactions accurately. The arrow from `RentalTransaction` to `Customer` shows that `RentalTransaction` depends on `Customer`.
     
         \item \textbf{Vehicle - RentalTransaction: } Since `RentalTransaction` involves a specific vehicle, an arrow from `RentalTransaction` to `Vehicle` indicates this dependency.
