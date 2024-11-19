@@ -36,14 +36,6 @@ public class RentalTransaction implements Serializable {
         return rentalDuration;
     }
 
-    public double getExtraFees() {
-        return extraFees;
-    }
-
-    public boolean hasRenterInsurance() {
-        return renterInsurance; 
-    }
-
     public double calculateTotal() {
         double total = vehicle.getRentalPrice() * rentalDuration + extraFees;
         if (renterInsurance) {

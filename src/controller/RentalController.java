@@ -2,10 +2,8 @@ package controller;
 
 import model.Customer;
 import model.Vehicle;
-import model.Reservation;
 import model.RentalTransaction;
 import model.Payment;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.*;
@@ -17,8 +15,6 @@ public class RentalController {
 
     // In-memory storage for vehicles 
     private Map<String, Vehicle> vehicles = new HashMap<>();
-    // In-memory storage for reservations 
-    private Map<String, Reservation> reservations = new HashMap<>();
     // In-memory storage for transactions 
     private Map<String, RentalTransaction> transactions = new HashMap<>();
     // In-memory storage for customers 
@@ -89,16 +85,8 @@ public class RentalController {
     }
 
     // Helper methods for generating unique IDs
-    private String generateReservationID() {
-        return "R" + (reservations.size() + 1);
-    }
-
     private String generateTransactionID() {
         return "T" + (transactions.size() + 1);
-    }
-
-    public String generatePaymentID() {
-        return "P" + (transactions.size() + 1);
     }
 
     public int getCustomersCount() {
@@ -115,34 +103,6 @@ public class RentalController {
         System.out.println("Vehicle added: " + vehicle.getName());
     }
 
-    public String getAllVehicles() {
-        StringBuilder vehicleList = new StringBuilder();
-        for (Vehicle vehicle : vehicles.values()) {
-            vehicleList.append(vehicle.toString()).append("\n");
-        }
-        return vehicleList.toString();
-    }
-
-    public String getCurrentRents() {
-        StringBuilder currentRentsList = new StringBuilder();
-        if (transactions.isEmpty()) {
-            return "No current rentals.";
-        }
-        
-        for (RentalTransaction transaction : transactions.values()) {
-            currentRentsList.append("Transaction ID: ")
-                            .append(transaction.getTransactionID())
-                            .append(", Vehicle ID: ")
-                            .append(transaction.getVehicle().getId())
-                            .append(", Customer Phone: ")
-                            .append(transaction.getCustomer().getPhoneNumber())
-                            .append(", Duration: ")
-                            .append(transaction.getDuration())
-                            .append(" days\n");
-        }
-        
-        return currentRentsList.toString();
-    }
 
     private void saveVehicles() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(VEHICLE_FILE))) {
@@ -206,9 +166,5 @@ public class RentalController {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public RentalTransaction getTransactionByID(String transactionID) {
-        return transactions.get(transactionID);
     }
 }

@@ -3,7 +3,6 @@ package gui;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import controller.RentalController;
-import model.RentalTransaction;
 import java.awt.*;
 
 public class CurrentRentsFrame extends JFrame {
